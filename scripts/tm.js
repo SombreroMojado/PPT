@@ -1,35 +1,34 @@
-// More API functions here:
-// https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
-
-// the link to your model provided by Teachable Machine export panel
+// El enlace a tu modelo proporcionado por el panel de exportación de Teachable Machine
+// O en caso de descargarte el modelo la carpeta a el
 const URL = "./my_model/";
 
 let model, webcam, labelContainer, maxPredictions, cam_on;
 
-// Load the image model and setup the webcam
+// Carga el modelo de imagen y configura la cámara web
 async function init() {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
 
-    // load the model and metadata
-    // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-    // or files from your local hard drive
-    // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+    // carga el modelo y los metadatos
+    // Consulta tmImage.loadFromFiles() en la API para admitir archivos desde un selector de archivos
+    // o archivos desde tu disco duro local
+    // Nota: la biblioteca de pose agrega el objeto "tmImage" a tu ventana (window.tmImage)
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
 
-    // Convenience function to setup a webcam
-    const flip = true; // whether to flip the webcam
-    webcam = new tmImage.Webcam(300, 300, flip); // width, height, flip
-    await webcam.setup(); // request access to the webcam
+    // Función de conveniencia para configurar una cámara web
+    const flip = true; // si se debe voltear la cámara web
+    webcam = new tmImage.Webcam(300, 300, flip); // ancho, alto, voltear
+    await webcam.setup(); // solicitar acceso a la cámara web
     await webcam.play();
     window.requestAnimationFrame(loop);
 
-    // append elements to the DOM
+    // agrega elementos al DOM
     document.getElementById("webcam-container").appendChild(webcam.canvas);
     document.getElementById("btn-cam").style.display = "none";
 }
 
+// se ejecuta por siempre, actualiza la cámara siempre que esté activa y reconoce al jugador
 async function loop(){
     if(cam_on == 0) return;
     webcam.update();
@@ -38,16 +37,15 @@ async function loop(){
     window.requestAnimationFrame(loop)
 }
 
-// run the webcam image through the image model
+// pasa la imagen de la cámara web a través del modelo de imagen
 async function predict() {
-    // predict can take in an image, video or canvas html element
+    // la funcion predict puede tomar una imagen, video o elemento canvas html
     const prediction = await model.predict(webcam.canvas);
+    // saca y devuelve el máximo de las predicciones
     for (let i = 0; i < maxPredictions; i++) {
         if(prediction[i].probability.toFixed(2) >= .5){
             let resultado = prediction[i].className;
             return (resultado)
         }
-        //prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        //labelContainer.childNodes[i].innerHTML = classPrediction;
     }
 }

@@ -1,17 +1,20 @@
-/*
+/* Nombre de los iconos
 Piedra: <i class="fa-solid fa-hand-back-fist"></i>
 Papel: <i class="fa-solid fa-hand"></i>
 Tijera: <i class="fa-solid fa-hand-scissors"></i>
 */
 
-
+// funcion incorporada para poder esperar un tiempo determinado
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
+// crea y establece en 0 las puntuaciones
 let puntosJugador = 0, puntosBot = 0;
 
+// al cargar la página configura el estado a preparado
 $(document).ready(actualizarEstado());
 
-
+// establece el icono del jugador
+// cambiando de clase la etiqueta del jugador cambia visualmente gracias a la libreria de iconos
 function actualizarJugador(respuesta){
     switch (respuesta){
         case "piedra":
@@ -37,6 +40,8 @@ function actualizarJugador(respuesta){
     }
 }
 
+
+// establece el icono del oponente
 function actualizarBot(respuesta){
     switch (respuesta){
         case "piedra":
@@ -57,6 +62,7 @@ function actualizarBot(respuesta){
     }
 }
 
+// elige de forma aleatoria el movimiento del oponente
 function respuestaBot(){
     let x = Math.round(Math.random() * 2);
     switch (x){
@@ -71,6 +77,8 @@ function respuestaBot(){
     }
 }
 
+
+// se ejecuta cada vez que se presiona el boton de jugar, hace la cuenta regresiva, toma la imagen de la camara, y da el resultado de la partida
 async function play(){
     loop();
     await countdown();
@@ -82,6 +90,7 @@ async function play(){
 
 }
 
+// compara la eleccion del jugador y el oponente y determina un ganador
 function resultadoPartida(jugador, bot){
     if(jugador == bot){ return ("empate")}
 
@@ -101,6 +110,8 @@ function resultadoPartida(jugador, bot){
     }
 }
 
+
+// muestra en el recuadro de abajo el estado de la partida (quien ha ganado o si todavía no se ha jugado)
 function actualizarEstado(estado){
     if(!estado){
         let i1 = $("<i></i>").attr("class", "fa-solid fa-hourglass-start");
@@ -148,6 +159,8 @@ function actualizarEstado(estado){
     estado = "";
 }
 
+
+// muestra la cuenta regresiva en el recuadro de abajo
 async function countdown(){
     let i1 = $("<i></i>").attr("class", "fa-solid fa-1")
     let i2 = $("<i></i>").attr("class", "fa-solid fa-2")
@@ -172,6 +185,8 @@ async function countdown(){
 }
 
 
+
+// añade la puntuacion al marcador
 function sumarPuntos(participante, puntos){
     switch (participante){
         case "bot":
