@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="./scripts/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <title>💎|🧻|✂</title>
+</head>
+<body>
+    <div class="container">
+        <h1>PIEDRA, PAPEL O TIJERA</h1>
+        <div class="btns">
+            <button class="btn" id="btn-cam" onclick="init()"><i class="fa-solid fa-camera"></i></button>
+            <button class="btn" id="btn-play" onclick="play()">Jugar <i class="fa-solid fa-gamepad"></i></button>
+        </div>
+        <div class="game">
+            <div class="contador">
+                <i class="fa-solid fa-face-laugh"></i>
+                <span id="puntos-jugador">0</span>
+                <span id="puntos-bot">0</span>
+                <i class="fa-solid fa-robot"></i> 
+            </div>
+            <div class="participantes">
+                <div class="jugador">
+                    <div class="avatar" id="webcam-container"></div>
+                    <label class="eleccion"><i id="eleccion-jugador" class="fa-solid fa-question"></i></label>
+                </div>
+                <hr>
+                <div class="bot">
+                    <div class="avatar" id="bot-avatar">
+                    </div>
+                    <label class="eleccion"><i id="eleccion-bot" class="fa-solid fa-question"></i></label>
+                </div>
+            </div>
+            <div id="estado">
+                <label id="estado-text">ESPERANDO...</label>
+            </div>
+
+        </div>
+    </div>
+    <script src="./scripts/tm.js"></script>
+    <script src="./scripts/main.js"></script>
+</body>
+</html>
